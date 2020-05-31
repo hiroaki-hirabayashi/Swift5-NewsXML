@@ -22,6 +22,18 @@ class IntroViewController: UIViewController,UIScrollViewDelegate {
         //1ページづつスクロールさせる
         scrollView.isPagingEnabled = true
         setUpScroll()
+        
+        for i in 0...4{
+            
+            let animationView = AnimationView()
+            let ainmation = Animation.named(onboardArray[i])
+            animationView.frame = CGRect(x: CGFloat(i) * view.frame.size.width, y: 0, width: view.frame.size.width, height: view.frame.size.height)
+            animationView.animation = ainmation
+            animationView.contentMode = .scaleAspectFit
+            animationView.loopMode = .loop
+            animationView.play()
+            scrollView.addSubview(animationView)
+        }
 
     }
     
@@ -44,7 +56,7 @@ class IntroViewController: UIViewController,UIScrollViewDelegate {
             
             onboradLabel.font = UIFont.boldSystemFont(ofSize: 15.0)
             onboradLabel.textAlignment = .center
-            onboradLabel.text = onboardArray[i]
+            onboradLabel.text = onboardStringArray[i]
             scrollView.addSubview(onboradLabel)
             
         }
