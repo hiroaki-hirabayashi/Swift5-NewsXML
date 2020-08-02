@@ -9,7 +9,7 @@
 import UIKit
 import SegementSlide
 
-class Page1ViewController: UITableViewController, SegementSlideContentScrollViewDelegate, XMLParserDelegate {
+class Page4ViewController: UITableViewController, SegementSlideContentScrollViewDelegate, XMLParserDelegate {
     
     //XMLParserのインスタンス
     var parser = XMLParser()
@@ -21,19 +21,18 @@ class Page1ViewController: UITableViewController, SegementSlideContentScrollView
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        //画像をtableViewの下に置く
+        
         tableView.backgroundColor = .clear
         
-        let image = UIImage(named: "0")
+        //画像をtableViewの下に置く
+        let image = UIImage(named: "3")
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: self.tableView.frame.size.width, height: self.tableView.frame.size.height))
-//        let imageView.fram = CGRect
         imageView.image = image
         self.tableView.backgroundView = imageView
         
         //XMLパース
-        let urlString = "https://news.yahoo.co.jp/pickup/rss.xml"
-        let url: URL = URL(string: urlString)!
+        let urlString = "https://news.yahoo.co.jp/pickup/computer/rss.xml"
+        let url:URL = URL(string: urlString)!
         parser = XMLParser(contentsOf: url)!
         parser.delegate = self
         parser.parse()
@@ -49,13 +48,13 @@ class Page1ViewController: UITableViewController, SegementSlideContentScrollView
     }
 
     // MARK: - Table view data source
-    //表示するセルの数
+
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
-    
-    //1セクション中のセルの数
+
+    //表示するセルの数
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return newsItems.count
@@ -70,13 +69,12 @@ class Page1ViewController: UITableViewController, SegementSlideContentScrollView
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        
-        //二行のセルが生成される
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
 
         cell.backgroundColor = .clear
-        let newsItem = self.newsItems[indexPath.row]
 
+        let newsItem = self.newsItems[indexPath.row]
+        
         cell.textLabel?.text = newsItem.title
         cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 15.0)
         cell.textLabel?.textColor = .white
@@ -92,31 +90,37 @@ class Page1ViewController: UITableViewController, SegementSlideContentScrollView
         
         currentElementName = nil
         if elementName == "item" {
+            
             self.newsItems.append(NewsItems())
+            
         } else {
+            
             currentElementName = elementName
         }
         
-    func parser(_ parser: XMLParser, foundCharacters string: String) {
-        if self.newsItems.count > 0 {
-            let lastItem = self.newsItems[self.newsItems.count - 1]
-
-            switch self.currentElementName {
-            case "title":
-                lastItem.title = string
-            case "link":
-                lastItem.url = string
-            case "pubDate":
-                lastItem.pubDate = string
-            default:
-                break
+    
+        func parser(_ parser: XMLParser, foundCharacters string: String) {
+            
+            if self.newsItems.count > 0 {
+                
+                let lastItem = self.newsItems[self.newsItems.count - 1]
+                
+                switch self.currentElementName {
+                case "title":
+                    lastItem.title = string
+                case "link":
+                    lastItem.url = string
+                case "pubDate":
+                    lastItem.pubDate = string
+                default:
+                    break
                 }
             }
         }
         
         func parser(_ parser: XMLParser, didEndElement: String, namespaceURI: String?, qualifiedName: String?) {
             
-            self.currentElementName = nil
+            currentElementName = nil
         }
         
         func parserDidEndDocument(_ parser: XMLParser) {
@@ -133,8 +137,6 @@ class Page1ViewController: UITableViewController, SegementSlideContentScrollView
             UserDefaults.standard.set(newsItem.url, forKey: "url")
             present(webViewController, animated: true, completion: nil)
         }
-        
-        
         
         
         
@@ -165,7 +167,7 @@ class Page1ViewController: UITableViewController, SegementSlideContentScrollView
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
     }
     */
 

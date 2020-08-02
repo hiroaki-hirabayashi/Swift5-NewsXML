@@ -13,7 +13,7 @@ class IntroViewController: UIViewController,UIScrollViewDelegate {
 
     
     @IBOutlet weak var scrollView: UIScrollView!
-    var onboardArray = ["1","2","3","4","5",]
+    var onboardArray = ["6","2","3","4","5",]
     var onboardStringArray = ["1つ目","2つ目","3つ目","4つ目","5つ目",]
     
     override func viewDidLoad() {
